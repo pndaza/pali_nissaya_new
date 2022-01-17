@@ -4,34 +4,32 @@ import '../../client/shared_pref_client.dart';
 
 final fullScreenStateProvider = StateProvider((_) => false);
 final appBarHeight = StateProvider<double>((ref) {
-  final isFullScreen = ref.watch(fullScreenStateProvider).state;
+  final isFullScreen = ref.watch(fullScreenStateProvider);
   return isFullScreen ? 0 : 56.0;
 });
 final scrollDirectionProvider = StateProvider<Axis>((ref) {
   return ref.read(sharedPreferenceClient).getScrollDirection();
 });
 
-
-final readerViewController = Provider<ReaderViewController>(
-    (ref) => ReaderViewController(read: ref.read));
+final readerViewController =
+    Provider<ReaderViewController>((ref) => ReaderViewController(ref));
 
 class ReaderViewController {
-  final Reader read;
-  ReaderViewController({required this.read});
+  final Ref ref;
+  ReaderViewController(this.ref);
 
   Future<void> toggleScrollDirection(Axis scrollDirection) async {
     if (scrollDirection == Axis.vertical) {
-      read(scrollDirectionProvider).state = Axis.horizontal;
-      read(sharedPreferenceClient).saveScrollDirection(Axis.horizontal);
+      ref.read(scrollDirectionProvider.notifier).state =   Axis.horizontal;
+      ref.read(sharedPreferenceClient).saveScrollDirection(Axis.horizontal);
     } else {
-      read(scrollDirectionProvider).state = Axis.vertical;
-      read(sharedPreferenceClient).saveScrollDirection(Axis.vertical);
+      ref.read(scrollDirectionProvider.notifier).state = Axis.vertical;
+      ref.read(sharedPreferenceClient).saveScrollDirection(Axis.vertical);
     }
   }
 
   void toggleFullScreenMode() {
-    final screenMode = read(fullScreenStateProvider).state;
-    read(fullScreenStateProvider).state = !screenMode;
+    final screenMode = ref.read(fullScreenStateProvider);
+    ref.read(fullScreenStateProvider.notifier).state = !screenMode;
   }
-
 }

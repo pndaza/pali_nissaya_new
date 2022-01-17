@@ -9,12 +9,12 @@ class NsyChoice extends ConsumerWidget {
   final int paliBookPageNumber;
 
   @override
-  Widget build(BuildContext context, watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final nsyBookState =
-        watch(nsyBooksProvider('$paliBookID-$paliBookPageNumber'));
+        ref.watch(nsyBooksProvider('$paliBookID-$paliBookPageNumber'));
     return Scaffold(
       appBar: AppBar(
-        title: const Text('နိဿယ​မူကွဲများ'),
+        title: const Text('နိဿယ မူကွဲများ'),
       ),
       body: nsyBookState.when(
           data: (data) {
@@ -43,14 +43,14 @@ class NsyChoice extends ConsumerWidget {
   }
 }
 
-class GridItem extends StatelessWidget {
+class GridItem extends ConsumerWidget {
   const GridItem({Key? key, required this.nsyBook}) : super(key: key);
   final NsyBook nsyBook;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
-        context.read(nsyChoiceViewController).openBook(context, nsyBook);
+        ref.read(nsyChoiceViewController).openBook(context, nsyBook);
       },
       child: Card(
         margin: EdgeInsets.all(4),

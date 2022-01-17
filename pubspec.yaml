@@ -13,15 +13,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  freezed_annotation: ^0.14.1
-  flutter_riverpod: ^0.14.0+1
+  freezed_annotation: ^1.1.0
+  flutter_riverpod: ^1.0.3
   pdf_render: ^1.0.9
   vs_scrollbar: ^0.2.0
   shared_preferences: ^2.0.5
   enum_to_string: ^2.0.1
   flutter_markdown: ^0.6.1
   grouped_list: ^4.0.0
-  scrollable_positioned_list: 0.2.0-nullsafety.0
+  scrollable_positioned_list: ^0.2.3
   sqflite: ^2.0.0+3
   path_provider:
   path: 
@@ -31,8 +31,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  json_serializable: ^4.1.0
-  freezed: ^0.14.1+2
+  json_serializable: ^6.1.4
+  freezed: ^1.1.1
   build_runner:
   flutter_launcher_icons: ^0.9.0
 

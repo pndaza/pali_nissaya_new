@@ -12,9 +12,9 @@ class ReaderAppBar extends ConsumerWidget implements PreferredSizeWidget {
   });
 
   @override
-  Widget build(BuildContext context, watch) {
-    final scrollDirection = watch(scrollDirectionProvider).state;
-    final isFullScreenMode = watch(fullScreenStateProvider).state;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scrollDirection = ref.watch(scrollDirectionProvider);
+    final isFullScreenMode = ref.watch(fullScreenStateProvider);
 
     if (isFullScreenMode) {
       final statusBarHeight = MediaQuery.of(context).padding.top;
@@ -32,7 +32,7 @@ class ReaderAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 ? Icons.swap_horiz
                 : Icons.swap_vert),
             onPressed: () async {
-              context
+              ref
                   .read(readerViewController)
                   .toggleScrollDirection(scrollDirection);
             })

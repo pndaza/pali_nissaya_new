@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:pali_nissaya/models/book.dart';
@@ -7,8 +6,8 @@ import 'package:pali_nissaya/screens/home/home_view_controller.dart';
 
 class Home extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, watch) {
-    final asyncPaliBooks = watch(paliBooksProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final asyncPaliBooks = ref.watch(paliBooksProvider);
     return Scaffold(
         appBar: AppBar(
           title: Text('ပါဠိတော်နိဿယ'),
@@ -46,12 +45,12 @@ class Home extends ConsumerWidget {
   }
 }
 
-class BookListTile extends StatelessWidget {
+class BookListTile extends ConsumerWidget {
   const BookListTile({Key? key, required this.book}) : super(key: key);
   final Book book;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
       shadowColor: Colors.brown,
@@ -63,7 +62,7 @@ class BookListTile extends StatelessWidget {
         ),
         contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
         onTap: () =>
-            context.read(homeViewController).openPageChoice(context, book),
+            ref.read(homeViewController).openPageChoice(context, book),
       ),
     );
   }

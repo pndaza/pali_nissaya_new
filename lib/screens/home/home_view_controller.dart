@@ -17,7 +17,7 @@ final paliBooksProvider = FutureProvider<List<Book>>((ref) async {
 final homeViewController = Provider((_) => HomeViewController());
 
 class HomeViewController {
-  void openPageChoice(BuildContext context, Book book) {
+  void onBookItemClicked(BuildContext context, Book book) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (_) => PageChoice(
               book: book,

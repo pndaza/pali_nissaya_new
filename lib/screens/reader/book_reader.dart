@@ -15,7 +15,7 @@ class BookReader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pdfController = PdfController(intialPage: this.pageNumber);
+    final pdfController = PdfController(intialPage: pageNumber);
 
     return Scaffold(
       appBar: ReaderAppBar(

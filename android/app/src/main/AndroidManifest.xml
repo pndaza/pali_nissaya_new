@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.pali_nissaya">
+    package="mm.pndaza.pali_nissaya">
    <application
         android:label="pali_nissaya"
         android:icon="@mipmap/launcher_icon">
@@ -30,6 +30,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="nissaya"
+                    android:host="mm.pndaza.palinissaya" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

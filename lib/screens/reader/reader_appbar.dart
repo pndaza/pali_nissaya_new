@@ -6,10 +6,8 @@ class ReaderAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final String bookID;
   final String? bookName;
 
-  const ReaderAppBar({
-    required this.bookID,
-    this.bookName,
-  });
+  const ReaderAppBar({Key? key, required this.bookID, this.bookName})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

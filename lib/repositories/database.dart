@@ -6,9 +6,9 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-  static final String _assetsFolder = 'assets';
-  static final String _databasePath = 'database';
-  static final String _databaseName = 'pali_nsy.db';
+  static const String _assetsFolder = 'assets';
+  static const String _databasePath = 'database';
+  static const String _databaseName = 'pali_nsy.db';
 
   DatabaseHelper._();
   static final DatabaseHelper _instance = DatabaseHelper._();
@@ -24,13 +24,13 @@ class DatabaseHelper {
 
 // Open Assets Database
   _initDatabase() async {
-    print('initializing Database');
+    // print('initializing Database');
     var dbPath = await getDatabasesPath();
     var path = join(dbPath, _databaseName);
 
     var exists = await databaseExists(path);
     if (!exists) {
-      print('creating new copy from asset');
+      // print('creating new copy from asset');
       try {
         await Directory(dirname(path)).create(recursive: true);
       } catch (_) {}
@@ -43,7 +43,7 @@ class DatabaseHelper {
 
       await File(path).writeAsBytes(bytes, flush: true);
     } else {
-      print('opening existing database');
+      // print('opening existing database');
     }
     return await openDatabase(path);
   }

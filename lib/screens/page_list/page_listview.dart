@@ -21,9 +21,10 @@ class PageListView extends ConsumerWidget {
           padding: const EdgeInsets.only(left: 24.0),
           child: ListTile(
             dense: true,
-            contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-            title: Text('$pageNumber', style: TextStyle(fontSize: 16.0)),
-            trailing: Icon(Icons.arrow_forward),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+            title: Text('$pageNumber', style: const TextStyle(fontSize: 16.0)),
+            trailing: const Icon(Icons.arrow_forward),
             onTap: () {
               ref
                   .read(pageChoiceViewController)
@@ -33,9 +34,7 @@ class PageListView extends ConsumerWidget {
         );
       },
       itemScrollController: itemScrollController,
-      separatorBuilder: (_, __) => Divider(
-        height: 1.0,
-      ),
+      separatorBuilder: (_, __) => const Divider(height: 1.0),
     );
   }
 }

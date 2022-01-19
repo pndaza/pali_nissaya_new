@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pali_nissaya/models/nsybook.dart';
+import 'package:pali_nissaya/widgets/error_view.dart';
+import 'package:pali_nissaya/widgets/loading_view.dart';
 import 'package:pali_nissaya/screens/nsy_list/nsy_choice_providers.dart';
 
 class NsyChoice extends ConsumerWidget {
-  NsyChoice({required this.paliBookID, required this.paliBookPageNumber});
+  const NsyChoice(
+      {Key? key, required this.paliBookID, required this.paliBookPageNumber})
+      : super(key: key);
   final String paliBookID;
   final int paliBookPageNumber;
 
@@ -17,15 +21,9 @@ class NsyChoice extends ConsumerWidget {
         title: const Text('နိဿယ မူကွဲများ'),
       ),
       body: nsyBookState.when(
-          data: (data) {
-            return _buildBookShelf(data);
-          },
-          loading: () => Center(
-                child: CircularProgressIndicator(),
-              ),
-          error: (_, __) => Center(
-                child: Text("Something's wrong!"),
-              )),
+          data: (data) => _buildBookShelf(data),
+          loading: () => const LoadingView(),
+          error: (_, __) => const ErrorView()),
     );
   }
 
@@ -53,7 +51,7 @@ class GridItem extends ConsumerWidget {
         ref.read(nsyChoiceViewController).openBook(context, nsyBook);
       },
       child: Card(
-        margin: EdgeInsets.all(4),
+        margin: const EdgeInsets.all(4),
         color: Colors.grey[100],
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -69,11 +67,9 @@ class GridItem extends ConsumerWidget {
                 height: 5,
               ),
               Expanded(
-                  child: Text(
-                '${nsyBook.name}',
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
-              ))
+                  child: Text(nsyBook.name,
+                      style: const TextStyle(fontSize: 20),
+                      textAlign: TextAlign.center))
             ],
           ),
         ),

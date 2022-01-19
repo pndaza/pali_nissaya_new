@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:pali_nissaya/screens/home/home.dart';
+
+import 'app.dart';
 
 final myLogger = Logger();
 
@@ -17,19 +18,5 @@ Future<void> main() async {
   runApp(ProviderScope(overrides: [
     // override the previous value with the new object
     sharedPreferencesProvider.overrideWithValue(sharedPreferences),
-  ], child: MyApp()));
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
-      home: Home(),
-    );
-  }
+  ], child: const MyApp()));
 }

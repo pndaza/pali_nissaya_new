@@ -7,8 +7,9 @@ final appBarHeight = StateProvider<double>((ref) {
   final isFullScreen = ref.watch(fullScreenStateProvider);
   return isFullScreen ? 0 : 56.0;
 });
-final scrollDirectionProvider = StateProvider<Axis>((ref) {
-  return ref.read(sharedPreferenceClient).getScrollDirection();
+
+final scrollDirectionProvider = StateProvider<Axis>((_) {
+  return SharedPreferenceClient.scrollDirection;
 });
 
 final readerViewController =
@@ -18,14 +19,19 @@ class ReaderViewController {
   final Ref ref;
   ReaderViewController(this.ref);
 
-  Future<void> toggleScrollDirection(Axis scrollDirection) async {
-    if (scrollDirection == Axis.vertical) {
-      ref.read(scrollDirectionProvider.notifier).state =   Axis.horizontal;
-      ref.read(sharedPreferenceClient).saveScrollDirection(Axis.horizontal);
-    } else {
-      ref.read(scrollDirectionProvider.notifier).state = Axis.vertical;
-      ref.read(sharedPreferenceClient).saveScrollDirection(Axis.vertical);
-    }
+  void toggleScrollDirection(Axis scrollDirection) {
+    final value =
+        scrollDirection == Axis.horizontal ? Axis.vertical : Axis.horizontal;
+    _updateScrollDirectionState(value);
+    _saveScrollDirection(value);
+  }
+
+  void _updateScrollDirectionState(Axis value) {
+    ref.read(scrollDirectionProvider.notifier).state = value;
+  }
+
+  void _saveScrollDirection(Axis value) {
+    SharedPreferenceClient.scrollDirection = value;
   }
 
   void toggleFullScreenMode() {

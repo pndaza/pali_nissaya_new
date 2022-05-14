@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../widgets/pdf_viewer/pdf_viewer.dart';
-import './reader_view_controller.dart';
-import './reader_appbar.dart';
+
 import '../../widgets/pdf_viewer/pdf_controller.dart';
+import '../../widgets/pdf_viewer/pdf_viewer.dart';
+import 'reader_appbar.dart';
+import 'reader_view_controller.dart';
 
 class BookReader extends ConsumerWidget {
   final String id;

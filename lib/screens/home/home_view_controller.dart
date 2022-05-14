@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pali_nissaya/models/book.dart';
-import 'package:pali_nissaya/repositories/book_repo.dart';
-import 'package:pali_nissaya/repositories/database.dart';
-import 'package:pali_nissaya/screens/page_list/page_choice.dart';
+
+import '../../models/book.dart';
+import '../../repositories/book_repo.dart';
+import '../../repositories/database.dart';
+import '../info/info_page.dart';
+import '../page_number_list/page_choice.dart';
 
 final paliBookRepoProvider =
     Provider((_) => DatabaseBookRepository(DatabaseHelper(), BookDao()));
@@ -22,5 +24,10 @@ class HomeViewController {
         builder: (_) => PageChoice(
               book: book,
             )));
+  }
+
+  void onInfoClicked(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => const InfoPage()));
   }
 }

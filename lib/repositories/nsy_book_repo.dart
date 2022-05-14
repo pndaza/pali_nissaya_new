@@ -1,5 +1,7 @@
-import 'package:pali_nissaya/models/nsybook.dart';
-import 'package:pali_nissaya/repositories/database.dart';
+
+
+import '../models/nsybook.dart';
+import 'database.dart';
 
 abstract class NsyBookRepository {
   Future<List<NsyBook>> fetchNsyBooks(

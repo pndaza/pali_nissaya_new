@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'pdf_controller.dart';
 import 'package:pdf_render/pdf_render.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 import 'package:vs_scrollbar/vs_scrollbar.dart';
 
+import 'pdf_controller.dart';
 import 'pdf_info.dart';
 
 typedef OnPageChanged = void Function(int);

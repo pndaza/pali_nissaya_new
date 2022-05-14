@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'widgets/book_list.dart';
-import 'home_view_controller.dart';
 import '../../widgets/error_view.dart';
 import '../../widgets/loading_view.dart';
+import 'home_view_controller.dart';
+import 'widgets/book_list.dart';
 
 class Home extends ConsumerWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,8 +14,14 @@ class Home extends ConsumerWidget {
     final state = ref.watch(paliBooksProvider);
     return Scaffold(
         appBar: AppBar(
-          title: const Text('ပါဠိတော်နိဿယ'),
+          title: const Text('ပါဠိနိဿယ'),
           centerTitle: true,
+          actions: [
+            IconButton(
+                onPressed: () =>
+                    ref.read(homeViewController).onInfoClicked(context),
+                icon: const Icon(Icons.info_outlined))
+          ],
         ),
         body: state.when(
           data: (books) => PaliBookList(books: books),

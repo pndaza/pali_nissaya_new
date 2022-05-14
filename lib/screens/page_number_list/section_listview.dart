@@ -42,16 +42,18 @@ class SectionListView extends StatelessWidget {
             itemBuilder: (_, index) {
               return SizedBox(
                 height: 36.0,
+                width: double.infinity,
                 child: ListTile(
-                  onTap: () => itemScrollController?.jumpTo(
-                      index: sectionList[index] - firstPage),
                   minVerticalPadding: 0.0,
                   contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
-                  title: Center(
-                      child: Text(
+                  title: Text(
                     '${sectionList[index]}',
+                    textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 12.0),
-                  )),
+                  ),
+                  onTap: () => itemScrollController?.scrollTo(
+                      index: sectionList[index] - firstPage,
+                      duration: const Duration(milliseconds: 300)),
                 ),
               );
             }),

@@ -19,9 +19,10 @@ class MyApp extends StatelessWidget {
           stream: _deepLinkBloc.state,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print(snapshot.data);
-              print('opening from deep link');
-              return DeepLinkView(key: Key(snapshot.data!), url: snapshot.data!);
+              debugPrint(snapshot.data);
+              debugPrint('opening from deep link');
+              return DeepLinkView(
+                  key: Key(snapshot.data!), url: snapshot.data!);
             } else {
               return const Home();
             }

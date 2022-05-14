@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pali_nissaya/screens/home/home_page.dart';
 
+import 'screens/home/home_page.dart';
 import 'screens/nsy_list/nsy_choice.dart';
 
 class DeepLinkView extends StatefulWidget {
@@ -22,8 +22,8 @@ class _DeepLinkViewState extends State<DeepLinkView> {
     pageNumber = parsePageNumber(widget.url);
 
     WidgetsBinding.instance?.addPostFrameCallback((_) {
-      print(bookId);
-      print(pageNumber);
+      debugPrint(bookId);
+      debugPrint(pageNumber);
       if (bookId != null && pageNumber != null) {
         Navigator.push(
             context,
@@ -37,11 +37,15 @@ class _DeepLinkViewState extends State<DeepLinkView> {
 
   @override
   Widget build(BuildContext context) {
-    print('building deep link view');
+    debugPrint('building deep link view');
+    // use home so that user can go back to home screen
+    // desire page will be route after building by using of
+    // WidgetsBinding.instance?.addPostFrameCallback
     return const Home();
   }
 
   String? parseBookId(String url) {
+    
     RegExp regexId = RegExp(r'\w+_\w+_\d+(_\d+)?');
     final matchId = regexId.firstMatch(url);
     return matchId?.group(0);

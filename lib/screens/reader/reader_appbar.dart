@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import './reader_view_controller.dart';
+
+import 'reader_view_controller.dart';
 
 class ReaderAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final String bookID;
@@ -26,7 +27,7 @@ class ReaderAppBar extends ConsumerWidget implements PreferredSizeWidget {
       centerTitle: true,
       actions: [
         IconButton(
-            icon: Icon(scrollDirection == Axis.vertical
+            icon: Icon(scrollDirection == Axis.horizontal
                 ? Icons.swap_horiz
                 : Icons.swap_vert),
             onPressed: () async {

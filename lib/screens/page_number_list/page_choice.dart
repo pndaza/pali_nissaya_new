@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+
 import '../../models/book.dart';
-import 'page_listview.dart';
+import 'page_choice_providers.dart';
+import 'page_number_listview.dart';
 import 'section_listview.dart';
 
-class PageChoice extends StatelessWidget {
+class PageChoice extends ConsumerWidget {
   PageChoice({
     Key? key,
     required this.book,
@@ -14,7 +17,7 @@ class PageChoice extends StatelessWidget {
   final ItemScrollController itemScrollController = ItemScrollController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('စာမျက်နှာရွေးပါ'),
@@ -22,8 +25,12 @@ class PageChoice extends StatelessWidget {
       body: Row(
         children: [
           Expanded(
-            child: PageListView(
-              book: book,
+            child: PageNumberListView(
+              firstPage: book.firstPage,
+              lastPage: book.lastPage,
+              onPageNumberClicked: (pageNumber) => ref
+                  .read(pageChoiceViewController)
+                  .onPageNumberClicked(context, book, pageNumber),
               itemScrollController: itemScrollController,
             ),
           ),

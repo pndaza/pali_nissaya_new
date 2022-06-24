@@ -1,32 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:pdf_render/pdf_render.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 import 'package:vs_scrollbar/vs_scrollbar.dart';
-
 import 'pdf_controller.dart';
+import 'package:pdf_render/pdf_render.dart';
+import 'pdf_page_view.dart';
+
 import 'pdf_info.dart';
 
 typedef OnPageChanged = void Function(int);
 
-class MyPdfViewer extends StatefulWidget {
+class AssetPdfViewer extends StatefulWidget {
   final String assetPath;
   final Axis scrollDirection;
   final PdfController? pdfController;
   final OnPageChanged? onPageChanged;
+  final ColorMode colorMode;
 
-  const MyPdfViewer(
+  const AssetPdfViewer(
       {Key? key,
       required this.assetPath,
       this.scrollDirection = Axis.vertical,
       this.pdfController,
-      this.onPageChanged})
+      this.onPageChanged,
+      this.colorMode = ColorMode.day,})
       : super(key: key);
 
   @override
-  _MyPdfViewerState createState() => _MyPdfViewerState();
+  _AssetPdfViewer createState() => _AssetPdfViewer();
 }
 
-class _MyPdfViewerState extends State<MyPdfViewer> {
+class _AssetPdfViewer extends State<AssetPdfViewer> {
   ScrollController? _scrollController;
 
   @override
@@ -45,7 +48,7 @@ class _MyPdfViewerState extends State<MyPdfViewer> {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             }
-            else if (snapshot.hasError) {
+            if (snapshot.hasError) {
               return const Center(child: Text('Something worng'));
             }
             final pdfInfo = snapshot.data!;
@@ -92,10 +95,13 @@ class _MyPdfViewerState extends State<MyPdfViewer> {
               return Container(
                 alignment: Alignment.center,
                 // margin: EdgeInsets.all(4),
-                padding: const EdgeInsets.all(1),
-                color: Colors.grey[300],
-                child: PdfPageView(
-                    pdfDocument: pdfInfo.document, pageNumber: index + 1),
+                padding: const EdgeInsets.all(2),
+                color: _getBackGroundColor(widget.colorMode),
+                child: MyPdfPageView(
+                  pdfPageView: PdfPageView(
+                      pdfDocument: pdfInfo.document, pageNumber: index + 1),
+                      colorMode: widget.colorMode,
+                ),
               );
             }),
       ),
@@ -105,7 +111,7 @@ class _MyPdfViewerState extends State<MyPdfViewer> {
   Future<PdfInfo> _loadPdf(String assetPath) async {
     final doc = await PdfDocument.openAsset(assetPath);
     final pageCount = doc.pageCount;
-    final page = pageCount > 55 ? await doc.getPage(55) : await doc.getPage(1);
+    final page = pageCount > 10 ? await doc.getPage(55) : await doc.getPage(1);
     final pageImage = await page.render();
     final width = pageImage.width;
     final height = pageImage.height;
@@ -126,5 +132,18 @@ class _MyPdfViewerState extends State<MyPdfViewer> {
     final screnAspectRatio = parentHeight / parentWidth;
     final pdfAspectRatio = pdfHeight / pdfWidth;
     return pdfAspectRatio / screnAspectRatio;
+  }
+
+  Color _getBackGroundColor(ColorMode colorMode) {
+    switch (colorMode) {
+      case ColorMode.day:
+        return Colors.white;
+      case ColorMode.night:
+        return Colors.black;
+      case ColorMode.speia:
+        return const Color.fromARGB(255, 255, 255, 213);
+      case ColorMode.grayscale:
+        return Colors.grey;
+    }
   }
 }

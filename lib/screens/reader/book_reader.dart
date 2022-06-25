@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pali_nissaya/packages/pdf_render/assets_pdf_viewer.dart';
 
-import '../../packages/pdf_render/pdf_controller.dart';
+import '../../packages/native_pdf_renderer/pdf_controller.dart';
+import '../../packages/native_pdf_renderer/pdf_viewer.dart';
 import 'reader_appbar.dart';
 import 'reader_view_controller.dart';
 

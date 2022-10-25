@@ -7,7 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uni_links/uni_links.dart';
 
 import 'deep_link_handler.dart';
-import 'deep_link_view.dart';
 import 'screens/home/home_page.dart';
 import 'screens/home/home_view_controller.dart';
 import 'screens/nsy_list/nsy_choice.dart';

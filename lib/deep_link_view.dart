@@ -1,3 +1,8 @@
+//
+// obsolete
+//
+
+/*
 import 'package:flutter/material.dart';
 
 import 'screens/home/home_page.dart';
@@ -64,3 +69,4 @@ class _DeepLinkViewState extends State<DeepLinkView> {
     */
   }
 }
+*/

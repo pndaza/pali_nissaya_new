@@ -51,8 +51,8 @@ class MyAppState extends ConsumerState<MyApp> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Tika Nissaya',
-      theme: ThemeData(primarySwatch: Colors.teal),
+      title: 'Pali Nissaya',
+      theme: ThemeData(primarySwatch: Colors.indigo),
       darkTheme: ThemeData.dark(),
       themeMode: themeMode,
       navigatorKey: _navigatorKey,
@@ -135,10 +135,10 @@ class MyAppState extends ConsumerState<MyApp> {
         paliBookId: paliBookId,
         pageNumber: int.parse(pageNumber),
       );
-      
+
       _navigatorKey.currentState
           ?.pushAndRemoveUntil(route, (Route<dynamic> route) => false);
-      }
+    }
   }
 
   MaterialPageRoute nsyChoiceRoute(
@@ -153,14 +153,22 @@ class MyAppState extends ConsumerState<MyApp> {
   }
 
   String? parseBookId(String url) {
+    final uri = Uri.parse(url);
+    return uri.queryParameters['id'];
+    /*
     RegExp regexId = RegExp(r'\w+_\w+_\d+(_\d+)?');
     final matchId = regexId.firstMatch(url);
     return matchId?.group(0);
+    */
   }
 
   String? parsePageNumber(String url) {
+    final uri = Uri.parse(url);
+    return uri.queryParameters['page'];
+    /*
     RegExp regexPage = RegExp(r'\d+$');
     final matchPage = regexPage.firstMatch(url);
     return matchPage?.group(0);
+    */
   }
 }

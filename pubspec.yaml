@@ -29,7 +29,7 @@ dependencies:
   flutter_widget_from_html_core: ^0.8.5+3
   sqflite: ^2.1.0
   sqflite_common_ffi: ^2.1.1+1
-  # sqlite3_flutter_libs:
+  sqlite3_flutter_libs:
   asset_pdf_viewer:
     # path: packages/asset_pdf_viewer_mobile
     path: packages/asset_pdf_viewer_desktop
@@ -59,10 +59,13 @@ flutter_icons:
 
 msix_config:
   display_name: Pali Nissaya
+  identity_name: 38337PnDaza.PaliNissaya
   publisher_display_name: PnDaza
-  identity_name: mm.pndaza.palinissaya
+  publisher: CN=D6488D0D-2C1E-4BF6-9E71-85196599EEB3
   msix_version: 1.0.0.0
   logo_path: .\assets\icon\pali_icon.jpg
+  protocol_activation: palinissaya
+  store: true
 
 # The following section is specific to Flutter.
 flutter:

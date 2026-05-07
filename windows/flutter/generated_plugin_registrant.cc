@@ -6,12 +6,15 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <native_pdf_renderer/native_pdf_renderer_plugin.h>
+#include <msix/none.h>
 #include <uni_links_desktop/uni_links_desktop_plugin.h>
+#include <url_launcher_windows/url_launcher_windows.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  NativePdfRendererPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("NativePdfRendererPlugin"));
+  noneRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("none"));
   UniLinksDesktopPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("UniLinksDesktopPlugin"));
+  UrlLauncherWindowsRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("UrlLauncherWindows"));
 }

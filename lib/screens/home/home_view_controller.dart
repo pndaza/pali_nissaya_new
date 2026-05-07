@@ -27,7 +27,7 @@ final paliBooksProvider = FutureProvider<List<Book>>((ref) async {
 final homeViewController = Provider((ref) => HomeViewController(ref));
 
 class HomeViewController {
-  final Ref ref;
+    final Ref ref;
   HomeViewController(this.ref);
 
   void onBookItemClicked(BuildContext context, Book book) {
@@ -37,12 +37,11 @@ class HomeViewController {
             )));
   }
 
-  void onInfoClicked(BuildContext context) {
+    void onInfoClicked(BuildContext context) {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (_) => const InfoPage()));
   }
-
-  void changeThemeMode(ThemeMode themeMode) {
+    void changeThemeMode(ThemeMode themeMode) {
     _updateThemeState(themeMode);
     _saveThemeMode(themeMode);
   }

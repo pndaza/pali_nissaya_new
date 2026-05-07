@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/book.dart';
+import '../../../../../models/book.dart';
+
 
 class BookListTile extends StatelessWidget {
-  const BookListTile({Key? key, required this.book, this.onTap}) : super(key: key);
+  const BookListTile({super.key, required this.book, this.onTap});
   final Book book;
   final VoidCallback? onTap;
 

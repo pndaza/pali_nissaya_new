@@ -1,0 +1,56 @@
+import 'package:just_pdf_viewer/just_pdf_viewer.dart';
+import 'package:easy_debounce/easy_debounce.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'reader_appbar.dart';
+import 'reader_view_controller.dart';
+
+class ReaderPage extends ConsumerWidget {
+  final String id;
+  final String? name;
+  final int pageNumber;
+
+  const ReaderPage({
+    super.key,
+    required this.id,
+    this.name,
+    this.pageNumber = 1,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scrollDirection = ref.watch(scrollDirectionProvider);
+    final colorMode = ref.watch(pdfColorModeProvider);
+    final container = ProviderScope.containerOf(context);
+    return Scaffold(
+      appBar: ReaderAppBar(bookID: id, bookName: name),
+      body: JustPdfViewer.asset(
+        'assets/books/pdf/$id.pdf',
+        config: PdfViewerConfig(
+          initialPage: pageNumber,
+          scrollDirection: scrollDirection,
+          colorMode: colorMode,
+          pageSnapping: scrollDirection == Axis.horizontal,
+        ),
+        callbacks: PdfViewerCallbacks(
+          onPageChanged: (pageIndex) {
+            EasyDebounce.debounce(
+              'page_changed',
+              const Duration(milliseconds: 500),
+              () {
+                if (!context.mounted) return;
+                container
+                    .read(readerViewController)
+                    .onPageChanged(nsyBookId: id, pageIndex: pageIndex);
+              },
+            );
+          },
+          onTap: () {
+            ref.read(readerViewController).toggleFullScreenMode();
+          },
+        ),
+      ),
+    );
+  }
+}

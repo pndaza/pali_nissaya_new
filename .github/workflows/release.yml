@@ -1,0 +1,62 @@
+name: Build & Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. 2.0.2)'
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.0'
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run build_runner (freezed)
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Build Windows x64
+        run: flutter build windows --release
+
+      - name: Ensure sqlite3.dll in build output
+        run: |
+          $target = "build\windows\x64\runner\Release\sqlite3.dll"
+          if (Test-Path $target) {
+            Write-Host "sqlite3.dll already present in build output (copied by CMake install)." -ForegroundColor Green
+          } else {
+            Write-Host "sqlite3.dll not found — copying from vendor as fallback." -ForegroundColor Yellow
+            Copy-Item "vendor\windows_x64\sqlite3.dll" $target
+          }
+
+      - name: Install Inno Setup
+        run: |
+          $innoUrl = "https://github.com/jrsoftware/issrc/releases/download/is-6_7_2/innosetup-6.7.2.exe"
+          $installer = "$env:TEMP\innosetup.exe"
+          Invoke-WebRequest -Uri $innoUrl -OutFile $installer
+          Start-Process -Wait -FilePath $installer -ArgumentList "/VERYSILENT /NORESTART /SP-"
+
+      - name: Build installer
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /DAppVersion="${{ inputs.version }}" "installer.iss"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ inputs.version }}
+          name: Pali Nissaya v${{ inputs.version }}
+          files: output/PaliNissaya_Setup_${{ inputs.version }}.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

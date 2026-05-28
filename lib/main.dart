@@ -7,7 +7,6 @@ import 'package:logger/logger.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqlite3/open.dart';
 import 'package:sqlite3/sqlite3.dart';
-import 'package:uni_links_desktop/uni_links_desktop.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'app.dart';
@@ -75,10 +74,6 @@ Future<void> main() async {
       await windowManager.show();
       await windowManager.focus();
     });
-  }
-
-  if (Platform.isWindows) {
-    registerProtocol('palinissaya');
   }
 
   runApp(const ProviderScope(child: MyApp()));

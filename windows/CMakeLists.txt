@@ -94,3 +94,13 @@ install(DIRECTORY "${PROJECT_BUILD_DIR}/${FLUTTER_ASSET_DIR_NAME}"
 install(FILES "${AOT_LIBRARY}" DESTINATION "${INSTALL_BUNDLE_DATA_DIR}"
   CONFIGURATIONS Profile;Release
   COMPONENT Runtime)
+
+# Copy architecture-appropriate sqlite3.dll from vendor/ to the build output.
+set(VENDOR_DIR "${CMAKE_SOURCE_DIR}/../vendor")
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64")
+  set(SQLITE3_DLL_PATH "${VENDOR_DIR}/windows_arm64/sqlite3.dll")
+else()
+  set(SQLITE3_DLL_PATH "${VENDOR_DIR}/windows_x64/sqlite3.dll")
+endif()
+install(FILES "${SQLITE3_DLL_PATH}" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
+  COMPONENT Runtime)

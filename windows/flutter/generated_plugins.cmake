@@ -3,14 +3,12 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  msix
   uni_links_desktop
   url_launcher_windows
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
   jni
-  pdfrx
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)

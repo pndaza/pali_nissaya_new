@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uni_links/uni_links.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'deep_link_handler.dart';
+import 'repositories/database.dart';
 import 'screens/home/home_page.dart';
 import 'screens/home/home_view_controller.dart';
 import 'screens/nsy_list/nsy_choice.dart';
 import 'utils/platform_helper.dart';
+import 'utils/window_config.dart';
 
 class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
@@ -19,7 +22,7 @@ class MyApp extends ConsumerStatefulWidget {
   ConsumerState<MyApp> createState() => MyAppState();
 }
 
-class MyAppState extends ConsumerState<MyApp> {
+class MyAppState extends ConsumerState<MyApp> with WindowListener {
   final _navigatorKey = GlobalKey<NavigatorState>();
   late final DeepLinkHandler _mobileDeepLink;
   StreamSubscription<String>? _mobilelinkSubscription;
@@ -33,6 +36,8 @@ class MyAppState extends ConsumerState<MyApp> {
       initMobileDeepLinks();
     }
     if (isDesktop) {
+      windowManager.addListener(this);
+      windowManager.setPreventClose(true);
       _handleIncomingLinks();
       _handleInitialUri();
     }
@@ -42,7 +47,40 @@ class MyAppState extends ConsumerState<MyApp> {
   void dispose() {
     _mobilelinkSubscription?.cancel();
     _desktoplinkSubscription?.cancel();
+    if (isDesktop) {
+      windowManager.removeListener(this);
+    }
     super.dispose();
+  }
+
+  @override
+  void onWindowClose() async {
+    await windowManager.hide();
+    final isMaximized = await windowManager.isMaximized();
+
+    if (!isMaximized) {
+      final position = await windowManager.getPosition();
+      final size = await windowManager.getSize();
+      await WindowConfig.saveWindowConfig({
+        'left': position.dx,
+        'top': position.dy,
+        'width': size.width,
+        'height': size.height,
+        'isMaximized': 0.0,
+      });
+    } else {
+      await WindowConfig.saveWindowConfig({
+        'isMaximized': 1.0,
+      });
+    }
+
+    await DatabaseHelper().close();
+    await windowManager.destroy();
+  }
+
+  @override
+  void onWindowFocus() {
+    setState(() {});
   }
 
   @override

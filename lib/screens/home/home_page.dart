@@ -49,7 +49,7 @@ class HomeState extends ConsumerState<Home> {
     final themeMode = ref.watch(themeProvider);
     final textScaler = MediaQuery.textScalerOf(context);
     final appBar = AppBar(
-      title: const Text('ဋီကာနိဿယ'),
+      title: const Text('ပါဠိနိဿယ'),
       centerTitle: true,
       actions: _actionButtons(ref, themeMode),
     );

@@ -1,5 +1,11 @@
 $scheme = "palinissaya"
+$basePath = "HKCU:\Software\Classes\$scheme"
 
 Write-Host "Removing ${scheme}:// URL scheme..." -ForegroundColor Yellow
-reg delete "HKCU\Software\Classes\${scheme}" /f
-Write-Host "Done." -ForegroundColor Green
+
+if (Test-Path $basePath) {
+    Remove-Item -Path $basePath -Recurse -Force
+    Write-Host "Done." -ForegroundColor Green
+} else {
+    Write-Host "Nothing to remove." -ForegroundColor Yellow
+}
